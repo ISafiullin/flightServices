@@ -11,9 +11,9 @@
     </parent>
 
     <groupId>fact.it</groupId>
-    <artifactId>airport-service</artifactId>
+    <artifactId>airline-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>airport</name>
+    <name>airline</name>
 
     <properties>
         <java.version>17</java.version>
@@ -46,10 +46,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.data</groupId>
-            <artifactId>spring-data-mongodb</artifactId>
         </dependency>
     </dependencies>
 

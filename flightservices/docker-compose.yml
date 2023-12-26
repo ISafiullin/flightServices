@@ -1,0 +1,70 @@
+version: '3'
+
+services:
+
+  mongo_flights:
+    image: mongo:latest
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodb_flight_data:/data/db
+
+  mysql_airport:
+    image: mysql:latest
+    ports:
+      - 3306:3306
+    volumes:
+      - mysql_airport_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: abc123
+
+  mysql_airline:
+    image: mysql:latest
+    ports:
+      - 3307:3306
+    volumes:
+      - mysql_airline_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: abc123
+
+  flight_service:
+    depends_on:
+      - mongo_flights
+    image: flight-service-image:latest
+    ports:
+      - 8080:8080
+    environment:
+      MONGODB_PORT: 27017
+      MONGODB_HOST: mongo_flights
+
+  airline_service:
+    depends_on:
+      - mysql_airline
+    image: airline-service-image:latest
+    ports:
+      - 8082:8082
+    environment:
+      MYSQL_DB_USERNAME: root
+      MYSQL_DB_PASSWORD: abc123
+      MYSQL_DB_HOST: mysql_airline
+      MYSQL_DB_PORT: 3306
+
+  airport_service:
+    depends_on:
+      - flight_service
+      - airline_service
+    image: airport-service-image:latest
+    ports:
+      - 8081:8081
+    environment:
+      FLIGHT_SERVICE_BASEURL: http://flight_service:8080
+      AIRLINE_SERVICE_BASEURL: http://airline_service:8082
+      MYSQL_DB_USERNAME: root
+      MYSQL_DB_PASSWORD: abc123
+      MYSQL_DB_HOST: mysql_airport
+      MYSQL_DB_PORT: 3306
+
+volumes:
+  mongodb_flight_data:
+  mysql_airline_data:
+  mysql_airport_data:

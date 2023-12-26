@@ -1,12 +1,11 @@
-package com.flightservices.flight;
+package fact.it.airline;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class FlightServiceApplication {
+public class AirlineServiceApplication {
     public static void main(String[] args) {
-        SpringApplication.run(FlightServiceApplication.class, args);
-
+        SpringApplication.run(AirlineServiceApplication.class, args);
     }
 }
