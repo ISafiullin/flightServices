@@ -8,7 +8,7 @@ import lombok.Data;
 public class Flight {
 
     private Integer id;
-    private Integer flightNumber;
+    private String flightNumber;
     private String destination;
     private Integer availableTickets;
 }

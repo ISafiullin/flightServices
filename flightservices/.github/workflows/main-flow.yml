@@ -1,0 +1,52 @@
+name: Main Flow
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Docker
+        uses: docker/setup-docker@v2
+        with:
+          dockerfile: ./flight-service/Dockerfile
+
+      - name: Build and push Docker image for flight-service
+        uses: docker/build-push-action@v2
+        with:
+          context: ./flight-service
+          push: true
+          tags: iliassafiullin/flight-service:latest
+
+      - name: Set up Docker for airline-service
+        uses: docker/setup-docker@v2
+        with:
+          dockerfile: ./airline-service/Dockerfile
+
+      - name: Build and push Docker image for airline-service
+        uses: docker/build-push-action@v2
+        with:
+          context: ./airline-service
+          push: true
+          tags: iliassafiullin/airline-service:latest
+
+      - name: Set up Docker for airport-service
+        uses: docker/setup-docker@v2
+        with:
+          dockerfile: ./airport-service/Dockerfile
+
+      - name: Build and push Docker image for airport-service
+        uses: docker/build-push-action@v2
+        with:
+          context: ./airport-service
+          push: true
+          tags: iliassafiullin/airport-service:latest
+
+      # Add more steps if needed for additional services or configurations

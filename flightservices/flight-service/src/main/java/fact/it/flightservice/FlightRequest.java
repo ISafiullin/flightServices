@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class FlightRequest {
 
-    private Integer flightNumber;
+    private String flightNumber;
     private String destination;
     private Integer availableTickets;
 }

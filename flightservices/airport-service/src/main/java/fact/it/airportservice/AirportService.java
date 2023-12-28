@@ -80,6 +80,7 @@ public class AirportService {
                     })
                     .collect(Collectors.toList());
 
+            airport.setBookedFlights(airport.getBookedFlights() + 1);
             airportRepository.save(airport);
             return true;
         } else {
@@ -111,7 +112,8 @@ public class AirportService {
                         airportLineFlight.getId(),
                         airportLineFlight.getFlightNumber(),
                         airportLineFlight.getDestination(),
-                        airportLineFlight.getBookedFlights()
+                        airportLineFlight.getBookedFlights(),
+                        airportLineFlight.getAvailableTickets()
                 ))
                 .collect(Collectors.toList());
     }

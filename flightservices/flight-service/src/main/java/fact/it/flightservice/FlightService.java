@@ -17,19 +17,26 @@ public class FlightService {
     public void loadData() {
         if(flightRepository.count() <= 0){
             Flight flight = Flight.builder()
-                    .flightNumber(123)
+                    .flightNumber("AA123")
                     .destination("New York")
                     .availableTickets(484)
                     .build();
 
             Flight flight1 = Flight.builder()
-                    .flightNumber(123)
-                    .destination("New York")
-                    .availableTickets(484)
+                    .flightNumber("DK545")
+                    .destination("Frankfurt")
+                    .availableTickets(186)
+                    .build();
+
+            Flight flight2 = Flight.builder()
+                    .flightNumber("FF112")
+                    .destination("Milan")
+                    .availableTickets(294)
                     .build();
 
             flightRepository.save(flight);
             flightRepository.save(flight1);
+            flightRepository.save(flight2);
         }
     }
 

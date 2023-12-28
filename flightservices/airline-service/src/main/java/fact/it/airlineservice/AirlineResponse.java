@@ -1,4 +1,4 @@
-package fact.it.flightservice;
+package fact.it.airlineservice;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -6,13 +6,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class FlightResponse {
-
-    private Integer id;
+@Builder
+public class AirlineResponse {
+    private String name;
     private String flightNumber;
-    private String destination;
-    private Integer availableTickets;
+    private boolean available;
 }
