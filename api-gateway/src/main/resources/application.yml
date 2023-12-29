@@ -1,0 +1,47 @@
+server:
+  port: 8083
+
+logging:
+  level:
+    root: INFO
+    org.springframework.cloud.gateway: INFO
+    org.springframework.cloud.gateway.route.RouteDefinitionRouteLocator: INFO
+    reactor.netty: INFO
+    org.springframework.security: TRACE
+
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${GOOGLE_CLIENTID}
+            client-secret: ${GOOGLE_CLIENTSECRET}
+            scope: openid,profile,email
+      resourceserver:
+        jwt:
+          issuer-uri: https://accounts.google.com
+          jwk-set-uri: https://www.googleapis.com/oauth2/v3/certs
+  cloud:
+    gateway:
+      routes:
+        - id: flight-service
+          uri: http://${FLIGHT_SERVICE_BASEURL:localhost:8080}
+          predicates:
+            - Path=/flights
+            - Method=POST
+          filters:
+            - SetPath=/api/flight
+        - id: flight-service-all
+          uri: http://${FLIGHT_SERVICE_BASEURL:localhost:8080}
+          predicates:
+            - Path=/flights
+            - Method=GET
+          filters:
+            - SetPath=/api/flights/all
+        - id: airport-service
+          uri: http://${AIRPORT_SERVICE_BASEURL:localhost:8081}
+          predicates:
+            - Path=/airports
+          filters:
+            - SetPath=/api/airports

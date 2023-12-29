@@ -16,6 +16,7 @@
         <module>airport-service</module>
         <module>airline-service</module>
         <module>api-gateway</module>
+        <module>api-gateway</module>
     </modules>
 
     <properties>
