@@ -1,4 +1,4 @@
-name: Main Flow
+name: Build and deliver containers
 
 on:
   push:
@@ -6,47 +6,110 @@ on:
       - main
 
 jobs:
-  build-and-deploy:
+  flight-service:
     runs-on: ubuntu-latest
-
+    name: Java 17 build, test, deliver flight-service container
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - name: Check out repository
+        uses: actions/checkout@v3
 
-      - name: Set up Docker
-        uses: docker/setup-docker@v2
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
         with:
-          dockerfile: ./flight-service/Dockerfile
+          java-version: 17
+          cache: maven
+          distribution: adopt
 
-      - name: Build and push Docker image for flight-service
-        uses: docker/build-push-action@v2
+      - name: Build, test and package project
+        working-directory: ./flight-service
+        run: mvn package -B
+
+      - name: Docker login
+        run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Docker Build
+        run: docker build -t ${{ secrets.DOCKER_USER }}/flight-service-image:latest ./flight-service
+
+      - name: Upload container to Docker Hub with Push
+        run: docker push ${{ secrets.DOCKER_USER }}/flight-service-image:latest
+
+  airline-service:
+    runs-on: ubuntu-latest
+    name: Java 17 build, test, deliver airline-service container
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
         with:
-          context: ./flight-service
-          push: true
-          tags: iliassafiullin/flight-service:latest
+          java-version: 17
+          cache: maven
+          distribution: adopt
 
-      - name: Set up Docker for airline-service
-        uses: docker/setup-docker@v2
+      - name: Build, test and package project
+        working-directory: ./airline-service
+        run: mvn package -B
+
+      - name: Docker login
+        run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Docker Build
+        run: docker build -t ${{ secrets.DOCKER_USER }}/airline-service-image:latest ./airline-service
+
+      - name: Upload container to Docker Hub with Push
+        run: docker push ${{ secrets.DOCKER_USER }}/airline-service-image:latest
+
+  airport-service:
+    runs-on: ubuntu-latest
+    name: Java 17 build, test, deliver airport-service container
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
         with:
-          dockerfile: ./airline-service/Dockerfile
+          java-version: 17
+          cache: maven
+          distribution: adopt
 
-      - name: Build and push Docker image for airline-service
-        uses: docker/build-push-action@v2
+      - name: Build, test and package project
+        working-directory: ./airport-service
+        run: mvn package -B
+
+      - name: Docker login
+        run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Docker Build
+        run: docker build -t ${{ secrets.DOCKER_USER }}/airport-service-image:latest ./airport-service
+
+      - name: Upload container to Docker Hub with Push
+        run: docker push ${{ secrets.DOCKER_USER }}/airport-service-image:latest
+
+  apigateway:
+    runs-on: ubuntu-latest
+    name: Java 17 build, test, deliver gateway-api container
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
         with:
-          context: ./airline-service
-          push: true
-          tags: iliassafiullin/airline-service:latest
+          java-version: 17
+          cache: maven
+          distribution: adopt
 
-      - name: Set up Docker for airport-service
-        uses: docker/setup-docker@v2
-        with:
-          dockerfile: ./airport-service/Dockerfile
+      - name: Build, test and package project
+        working-directory: ./api-gateway
+        run: mvn package -B -DskipTests
 
-      - name: Build and push Docker image for airport-service
-        uses: docker/build-push-action@v2
-        with:
-          context: ./airport-service
-          push: true
-          tags: iliassafiullin/airport-service:latest
+      - name: Docker login
+        run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWORD }}
 
-      # Add more steps if needed for additional services or configurations
+      - name: Docker Build
+        run: docker build --build-arg GOOGLE_CLIENTID=${{ secrets.GOOGLE_CLIENTID }} --build-arg GOOGLE_CLIENTSECRET=${{ secrets.GOOGLE_CLIENTSECRET }} -t ${{ secrets.DOCKER_USER }}/gateway-api-image:latest ./api-gateway
+
+      - name: Upload container to Docker Hub with Push
+        run: docker push ${{ secrets.DOCKER_USER }}/gateway-api-image:latest

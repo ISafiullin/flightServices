@@ -64,6 +64,20 @@ services:
       MYSQL_DB_HOST: mysql_airport
       MYSQL_DB_PORT: 3306
 
+  api-gateway:
+    depends_on:
+       - flight_service
+       - airport_service
+    image: iliassafiullin/gateway-api-image
+    ports:
+      - 8083:8083
+    links:
+       - flight_service
+       - airport_service
+    environment:
+      FLIGHT_SERVICE_BASEURL: flight_service:8080
+      AIRPORT_SERVICE_BASEURL: airport_service:8081
+
 volumes:
   mongodb_flight_data:
   mysql_airline_data:
