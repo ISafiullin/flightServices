@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class AirlineResponse {
-    private Integer fligtNumber;
+    private String fligtNumber;
     private boolean available;
 }

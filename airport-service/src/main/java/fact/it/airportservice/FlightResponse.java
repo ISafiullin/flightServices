@@ -12,8 +12,6 @@ import lombok.NoArgsConstructor;
 public class FlightResponse {
     private String id;
     private String flightNumber;
-    private String bookedFlights;
-    private String name;
-    private String country;
-    private Integer iata;
+    private String destination;
+    private Integer availableTickets;
 }

@@ -1,10 +1,16 @@
 package fact.it.flightservice;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@Data
+@Document(value = "flight")
+@AllArgsConstructor
+@NoArgsConstructor
 @Builder
+@Data
 public class Flight {
 
     private Integer id;

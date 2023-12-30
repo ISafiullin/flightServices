@@ -19,7 +19,6 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -74,13 +73,17 @@ public class AirportService {
                                 .findFirst()
                                 .orElse(null);
                         if (flight != null) {
-                            airportFlight.setBookedFlights(airportFlight.getBookedFlights()+1);
+                            Integer bookedFlights = airport.getBookedFlights();
+                            if (bookedFlights != null) {
+                                airport.setBookedFlights(bookedFlights + 1);
+                            } else {
+                                airport.setBookedFlights(1);
+                            }
                         }
                         return airportFlight;
                     })
                     .collect(Collectors.toList());
 
-            airport.setBookedFlights(airport.getBookedFlights() + 1);
             airportRepository.save(airport);
             return true;
         } else {
@@ -112,11 +115,8 @@ public class AirportService {
                         airportLineFlight.getId(),
                         airportLineFlight.getFlightNumber(),
                         airportLineFlight.getDestination(),
-                        airportLineFlight.getBookedFlights(),
                         airportLineFlight.getAvailableTickets()
                 ))
                 .collect(Collectors.toList());
     }
-
-
 }

@@ -20,10 +20,8 @@ public class Airport {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
-    private String country;
     private String flightRequestNumber;
     private Integer bookedFlights;
-    private String iata;
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<AirportLineFlight> airportLineFlightList;

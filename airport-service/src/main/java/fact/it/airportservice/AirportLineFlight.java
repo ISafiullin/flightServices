@@ -20,5 +20,4 @@ public class AirportLineFlight {
     private String flightNumber;
     private String destination;
     private Integer availableTickets;
-    private Integer bookedFlights;
 }
