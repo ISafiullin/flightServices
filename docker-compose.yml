@@ -8,8 +8,6 @@ services:
       - 27017:27017
     volumes:
       - mongodb_flight_data:/data/db
-    environment:
-      OKTETO_NAMESPACE: isafiullin
 
   mysql_airport:
     image: mysql:latest
@@ -19,7 +17,6 @@ services:
       - mysql_airport_data:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: abc123
-      OKTETO_NAMESPACE: isafiullin
 
   mysql_airline:
     image: mysql:latest
@@ -29,7 +26,6 @@ services:
       - mysql_airline_data:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: abc123
-      OKTETO_NAMESPACE: isafiullin
 
   flight_service:
     depends_on:
@@ -40,7 +36,6 @@ services:
     environment:
       MONGODB_PORT: 27017
       MONGODB_HOST: mongo_flights
-      OKTETO_NAMESPACE: isafiullin
 
   airline_service:
     depends_on:
@@ -53,7 +48,6 @@ services:
       MYSQL_DB_PASSWORD: abc123
       MYSQL_DB_HOST: mysql_airline
       MYSQL_DB_PORT: 3307
-      OKTETO_NAMESPACE: isafiullin
 
   airport_service:
     depends_on:
@@ -63,13 +57,12 @@ services:
     ports:
       - 8081:8081
     environment:
-      FLIGHT_SERVICE_BASEURL: http://flight_service:8080
-      AIRLINE_SERVICE_BASEURL: http://airline_service:8082
+      FLIGHT_SERVICE_BASEURL: flight_service:8080
+      AIRLINE_SERVICE_BASEURL: airline_service:8082
       MYSQL_DB_USERNAME: root
       MYSQL_DB_PASSWORD: abc123
       MYSQL_DB_HOST: mysql_airport
       MYSQL_DB_PORT: 3306
-      OKTETO_NAMESPACE: isafiullin
 
   api-gateway:
     depends_on:
@@ -79,8 +72,8 @@ services:
     ports:
       - 8083:8083
     environment:
-      FLIGHT_SERVICE_BASEURL: http://flight_service:8080
-      AIRPORT_SERVICE_BASEURL: http://airline_service:8082
+      FLIGHT_SERVICE_BASEURL: flight_service:8080
+      AIRPORT_SERVICE_BASEURL: airline_service:8082
       OKTETO_NAMESPACE: isafiullin
 
 volumes:
