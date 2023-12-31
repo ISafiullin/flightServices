@@ -23,7 +23,7 @@ services:
 
   flight_service:
     image: iliassafiullin/flight-service-image:latest
-    command: ["bash"]
+    command: []
     volumes:
       - .:/app
     ports:
@@ -31,7 +31,7 @@ services:
 
   airline_service:
     image: iliassafiullin/airline-service-image:latest
-    command: ["bash"]
+    command: []
     volumes:
       - .:/app
     ports:
@@ -39,7 +39,7 @@ services:
 
   airport_service:
     image: iliassafiullin/airport-service-image:latest
-    command: ["bash"]
+    command: []
     volumes:
       - .:/app
     ports:
@@ -47,7 +47,7 @@ services:
 
   api-gateway:
     image: iliassafiullin/gateway-api-image:latest
-    command: ["bash"]
+    command: []
     volumes:
       - .:/app
     ports:
