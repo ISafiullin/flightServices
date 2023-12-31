@@ -15,9 +15,13 @@ spec:
       containers:
         - name: mysql
           image: mysql:latest
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: abc123
+            - name: MYSQLX_PORT
+              value: "3306"  # Use a different port for the X Plugin
           ports:
             - containerPort: 3306
-              hostPort: 3306
           volumeMounts:
             - name: mysql-airport-storage
               mountPath: /var/lib/mysql

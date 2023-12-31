@@ -15,9 +15,13 @@ spec:
       containers:
         - name: mysql
           image: mysql:latest
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: abc123
+            - name: MYSQLX_PORT
+              value: "3307"
           ports:
             - containerPort: 3307
-              hostPort: 3307
           volumeMounts:
             - name: mysql-airline-storage
               mountPath: /var/lib/mysql
