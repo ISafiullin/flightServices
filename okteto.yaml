@@ -2,48 +2,54 @@ name: flight-services
 namespace: isafiullin
 
 services:
-  - name: mongo_flights
+  mongo_flights:
     image: mongo:latest
-    ports:
-      - 27017:27017
     volumes:
       - mongodb_flight_data:/data/db
 
-  - name: mysql_airport
+  mysql_airport:
     image: mysql:latest
     environment:
       MYSQL_ROOT_PASSWORD: abc123
-    ports:
-      - 3306:3306
     volumes:
       - mysql_airport_data:/var/lib/mysql
 
-  - name: mysql_airline
+  mysql_airline:
     image: mysql:latest
     environment:
       MYSQL_ROOT_PASSWORD: abc123
-    ports:
-      - 3307:3306
     volumes:
       - mysql_airline_data:/var/lib/mysql
 
-  - name: flight_service
+  flight_service:
     image: iliassafiullin/flight-service-image:latest
+    command: ["bash"]
+    volumes:
+      - .:/app
     ports:
       - 8080:8080
 
-  - name: airline_service
+  airline_service:
     image: iliassafiullin/airline-service-image:latest
+    command: ["bash"]
+    volumes:
+      - .:/app
     ports:
       - 8082:8082
 
-  - name: airport_service
+  airport_service:
     image: iliassafiullin/airport-service-image:latest
+    command: ["bash"]
+    volumes:
+      - .:/app
     ports:
       - 8081:8081
 
-  - name: api-gateway
+  api-gateway:
     image: iliassafiullin/gateway-api-image:latest
+    command: ["bash"]
+    volumes:
+      - .:/app
     ports:
       - 8083:8083
 
