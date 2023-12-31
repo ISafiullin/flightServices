@@ -18,8 +18,6 @@ spec:
           env:
             - name: MYSQL_ROOT_PASSWORD
               value: abc123
-            - name: MYSQLX_PORT
-              value: "3306"
           ports:
             - containerPort: 3306
           volumeMounts:
@@ -41,3 +39,4 @@ spec:
     - protocol: TCP
       port: 3306
       targetPort: 3306
+  type: NodePort

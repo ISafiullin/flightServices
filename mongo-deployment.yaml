@@ -24,3 +24,17 @@ spec:
         - name: mongo-flights-storage
           persistentVolumeClaim:
             claimName: mongo-flights-pvc
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongo-flights
+spec:
+  selector:
+    app: mongo-flights
+  ports:
+    - protocol: TCP
+      port: 27017
+      targetPort: 27017
+  type: NodePort
