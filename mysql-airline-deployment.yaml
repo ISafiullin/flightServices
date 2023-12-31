@@ -29,3 +29,15 @@ spec:
         - name: mysql-airline-storage
           persistentVolumeClaim:
             claimName: mysql-airline-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-airline
+spec:
+  selector:
+    app: mysql-airline
+  ports:
+    - protocol: TCP
+      port: 3306
+      targetPort: 3307

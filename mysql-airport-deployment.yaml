@@ -19,7 +19,7 @@ spec:
             - name: MYSQL_ROOT_PASSWORD
               value: abc123
             - name: MYSQLX_PORT
-              value: "3306"  # Use a different port for the X Plugin
+              value: "3306"
           ports:
             - containerPort: 3306
           volumeMounts:
@@ -29,3 +29,15 @@ spec:
         - name: mysql-airport-storage
           persistentVolumeClaim:
             claimName: mysql-airport-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-airport
+spec:
+  selector:
+    app: mysql-airport
+  ports:
+    - protocol: TCP
+      port: 3306
+      targetPort: 3306
