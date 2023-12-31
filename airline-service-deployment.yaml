@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: airline-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: airline-service
+  template:
+    metadata:
+      labels:
+        app: airline-service
+    spec:
+      containers:
+        - name: airline-service
+          image: iliassafiullin/airline-service-image:latest
+          ports:
+            - containerPort: 8082
+          env:
+            - name: MYSQL_DB_USERNAME
+              value: "root"
+            - name: MYSQL_DB_PASSWORD
+              value: "abc123"
+            - name: MYSQL_DB_HOST
+              value: "mysql-airline"
+            - name: MYSQL_DB_PORT
+              value: "3307"
