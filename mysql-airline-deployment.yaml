@@ -17,7 +17,7 @@ spec:
           image: mysql:latest
           ports:
             - containerPort: 3307
-            - hostPort: 3307
+              hostPort: 3307
           volumeMounts:
             - name: mysql-airline-storage
               mountPath: /var/lib/mysql
