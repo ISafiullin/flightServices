@@ -26,8 +26,8 @@ public class AirlineServiceUnitTests {
     public void TestIfAvailable(){
         // Arrange
         List<String> flightNumbers = Arrays.asList("ABC 123", "XYZ 789");
-        AirlineFlight airlineFlight1 = new AirlineFlight(1, "TUI", "ABC 123");
-        AirlineFlight airlineFlight2 = new AirlineFlight(2, "Lufthansa", "XYZ 789");
+        AirlineFlight airlineFlight1 = new AirlineFlight(1, "TUI", "ABC 123",true);
+        AirlineFlight airlineFlight2 = new AirlineFlight(2, "Lufthansa", "XYZ 789",false);
         List<AirlineFlight> airlineFlights = Arrays.asList(airlineFlight1, airlineFlight2);
 
         when(airlineRepository.findByFlightNumberIn(flightNumbers)).thenReturn(airlineFlights);

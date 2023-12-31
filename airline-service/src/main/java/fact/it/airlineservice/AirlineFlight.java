@@ -19,4 +19,5 @@ public class AirlineFlight {
     private Integer id;
     private String name;
     private String flightNumber;
+    private boolean available;
 }
