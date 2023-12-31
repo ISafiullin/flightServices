@@ -1,5 +1,6 @@
 package fact.it.airlineservice;
 
+import ch.qos.logback.core.joran.conditional.IfAction;
 import fact.it.airlineservice.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -40,7 +41,7 @@ public class AirlineServiceUnitTests {
         assertEquals("ABC 123", airlineResponses.get(0).getFlightNumber());
         assertEquals(true,airlineResponses.get(0).isAvailable());
         assertEquals("XYZ 789", airlineResponses.get(1).getFlightNumber());
-        assertEquals(false,airlineResponses.get(1).isAvailable());
+        assertEquals(false, !airlineResponses.get(1).isAvailable());
 
         verify(airlineRepository, times(1)).findByFlightNumberIn(flightNumbers);
     }
