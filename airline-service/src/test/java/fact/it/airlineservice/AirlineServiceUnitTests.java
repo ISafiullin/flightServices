@@ -38,9 +38,9 @@ public class AirlineServiceUnitTests {
         // Assert
         assertEquals(2, airlineResponses.size());
         assertEquals("ABC 123", airlineResponses.get(0).getFlightNumber());
-        assertTrue(airlineResponses.get(0).isAvailable());
+        assertEquals(true,airlineResponses.get(0).isAvailable());
         assertEquals("XYZ 789", airlineResponses.get(1).getFlightNumber());
-        assertFalse(airlineResponses.get(1).isAvailable());
+        assertEquals(false,airlineResponses.get(1).isAvailable());
 
         verify(airlineRepository, times(1)).findByFlightNumberIn(flightNumbers);
     }
