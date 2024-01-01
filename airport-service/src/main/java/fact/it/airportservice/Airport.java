@@ -24,5 +24,5 @@ public class Airport {
     private Integer bookedFlights;
 
     @OneToMany(cascade = CascadeType.ALL)
-    private List<AirportLineFlight> airportLineFlightList;
+    private List<AirportLineFlight> airportLineFlightsList;
 }

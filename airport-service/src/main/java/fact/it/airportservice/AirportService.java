@@ -8,6 +8,7 @@ import fact.it.airportservice.FlightResponse;
 import fact.it.airportservice.Airport;
 import fact.it.airportservice.AirportLineFlight;
 import fact.it.airportservice.AirportRepository;
+
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -42,9 +43,9 @@ public class AirportService {
                 .map(this::mapToAirportLineFlight)
                 .toList();
 
-        airport.setAirportLineFlightList(airportLineFlights);
+        airport.setAirportLineFlightsList(airportLineFlights);
 
-        List<String> flightNumbers = airport.getAirportLineFlightList().stream()
+        List<String> flightNumbers = airport.getAirportLineFlightsList().stream()
                 .map(AirportLineFlight::getFlightNumber)
                 .toList();
 
@@ -66,7 +67,7 @@ public class AirportService {
                     .bodyToMono(FlightResponse[].class)
                     .block();
 
-            airport.getAirportLineFlightList().stream()
+            airport.getAirportLineFlightsList().stream()
                     .map(airportFlight -> {
                         FlightResponse flight = Arrays.stream(flightResponseArray)
                                 .filter(p -> p.getFlightNumber().equals(airportFlight.getFlightNumber()))
@@ -97,7 +98,7 @@ public class AirportService {
         return airports.stream()
                 .map(airport -> new AirportResponse(
                         airport.getFlightRequestNumber(),
-                        mapToAirportLineFlightDto(airport.getAirportLineFlightList())
+                        mapToAirportLineFlightDto(airport.getAirportLineFlightsList())
                 ))
                 .collect(Collectors.toList());
     }
