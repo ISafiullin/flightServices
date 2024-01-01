@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AirportLineFlightDto {
-    private Integer id;
+    private Long id;
     private String flightNumber;
     private String destination;
     private Integer availableTickets;

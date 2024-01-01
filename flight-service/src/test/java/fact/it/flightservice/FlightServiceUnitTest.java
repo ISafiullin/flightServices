@@ -40,7 +40,7 @@ public class FlightServiceUnitTest {
     public void testGetAllFlights() {
         // Arrange
         Flight flight = new Flight();
-        flight.setId(1);
+        flight.setId(1L);
         flight.setFlightNumber("ABC 123");
         flight.setDestination("Brussels");
         flight.setAvailableTickets(430);
@@ -63,7 +63,7 @@ public class FlightServiceUnitTest {
     public void testGetAllFlightsByDestination() {
         // Arrange
         Flight flight = new Flight();
-        flight.setId(1);
+        flight.setId(1L);
         flight.setFlightNumber("ABC 123");
         flight.setDestination("Brussels");
         flight.setAvailableTickets(430);
@@ -75,7 +75,7 @@ public class FlightServiceUnitTest {
 
         // Assert
         assertEquals(1, flights.size());
-        assertEquals(1, flights.get(0).getId());
+        assertEquals(1L, flights.get(0).getId());
         assertEquals("Brussels", flights.get(0).getDestination());
         assertEquals("ABC 123", flights.get(0).getFlightNumber());
         assertEquals(430, flights.get(0).getAvailableTickets());

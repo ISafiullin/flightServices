@@ -16,7 +16,7 @@ import lombok.Setter;
 public class AirportLineFlight {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
     private String flightNumber;
     private String destination;
     private Integer availableTickets;

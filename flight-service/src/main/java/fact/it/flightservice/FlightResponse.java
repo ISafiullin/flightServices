@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class FlightResponse {
 
-    private Integer id;
+    private Long id;
     private String flightNumber;
     private String destination;
     private Integer availableTickets;

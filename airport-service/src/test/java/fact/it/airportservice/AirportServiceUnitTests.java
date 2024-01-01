@@ -57,7 +57,7 @@ public class AirportServiceUnitTests {
         AirportRequest airportRequest = new AirportRequest();
         // populate orderRequest with test data
         AirportLineFlightDto airportLineFlightDto = new AirportLineFlightDto();
-        airportLineFlightDto.setId(1);
+        airportLineFlightDto.setId(1L);
         airportLineFlightDto.setFlightNumber(flightNumber);
         airportLineFlightDto.setDestination(destination);
         airportLineFlightDto.setAvailableTickets(484);
@@ -70,17 +70,17 @@ public class AirportServiceUnitTests {
 
         FlightResponse flightResponse = new FlightResponse();
         // populate productResponse with test data
-        flightResponse.setId("1");
+        flightResponse.setId(1L);
         flightResponse.setFlightNumber(flightNumber);
         flightResponse.setDestination(destination);
         flightResponse.setAvailableTickets(484);
 
         Airport airport = new Airport();
-        airport.setId(1);
+        airport.setId(1L);
         airport.setFlightRequestNumber("1");
         airport.setBookedFlights(0);
         AirportLineFlight airportLineFlight = new AirportLineFlight();
-        airportLineFlight.setId(1);
+        airportLineFlight.setId(1L);
         airportLineFlight.setFlightNumber(flightNumber);
         airportLineFlight.setDestination(destination);
         airportLineFlight.setAvailableTickets(484);
@@ -114,7 +114,7 @@ public class AirportServiceUnitTests {
         AirportRequest airportRequest = new AirportRequest();
         // populate orderRequest with test data
         AirportLineFlightDto airportLineFlightDto = new AirportLineFlightDto();
-        airportLineFlightDto.setId(1);
+        airportLineFlightDto.setId(1L);
         airportLineFlightDto.setFlightNumber(flightNumber);
         airportLineFlightDto.setDestination(destination);
         airportLineFlightDto.setAvailableTickets(484);
@@ -127,18 +127,18 @@ public class AirportServiceUnitTests {
 
         FlightResponse flightResponse = new FlightResponse();
         // populate productResponse with test data
-        flightResponse.setId("1");
+        flightResponse.setId(1L);
         flightResponse.setFlightNumber(flightNumber);
         flightResponse.setDestination(destination);
         flightResponse.setAvailableTickets(484);
 
         Airport airport = new Airport();
-        airport.setId(1);
+        airport.setId(1L);
         airport.setFlightRequestNumber("1");
         airport.setName("JFK Airport");
         airport.setBookedFlights(1);
         AirportLineFlight airportLineFlight = new AirportLineFlight();
-        airportLineFlight.setId(1);
+        airportLineFlight.setId(1L);
         airportLineFlight.setFlightNumber(flightNumber);
         airportLineFlight.setDestination(destination);
         airportLineFlight.setAvailableTickets(484);
@@ -161,15 +161,15 @@ public class AirportServiceUnitTests {
     @Test
     public void testGetAllAirports() {
         // Arrange
-        AirportLineFlight airportLineFlight = new AirportLineFlight(1, "ABC 123", "Brussels", 484);
-        AirportLineFlight airportLineFlight1 = new AirportLineFlight(2, "DEF 456", "Amsterdam", 484);
+        AirportLineFlight airportLineFlight = new AirportLineFlight(1L, "ABC 123", "Brussels", 484);
+        AirportLineFlight airportLineFlight1 = new AirportLineFlight(2L, "DEF 456", "Amsterdam", 484);
 
-        Airport airport1 = new Airport(1, "JFK Airport", "1",2,Arrays.asList(airportLineFlight1, airportLineFlight));
+        Airport airport1 = new Airport(1L, "JFK Airport", "1",2,Arrays.asList(airportLineFlight1, airportLineFlight));
 
-        AirportLineFlight airportLineFlight2 = new AirportLineFlight(3, "XYZ 999", "Milan", 484);
-        AirportLineFlight airportLineFlight3 = new AirportLineFlight(4, "UFC 229", "Hamburg", 484);
+        AirportLineFlight airportLineFlight2 = new AirportLineFlight(3L, "XYZ 999", "Milan", 484);
+        AirportLineFlight airportLineFlight3 = new AirportLineFlight(4L, "UFC 229", "Hamburg", 484);
 
-        Airport airport2 = new Airport(2, "Schiphol", "1",2,Arrays.asList(airportLineFlight3, airportLineFlight2));
+        Airport airport2 = new Airport(2L, "Schiphol", "1",2,Arrays.asList(airportLineFlight3, airportLineFlight2));
 
         when(airportRepository.findAll()).thenReturn(Arrays.asList(airport1, airport2));
 
@@ -177,7 +177,7 @@ public class AirportServiceUnitTests {
         List<AirportResponse> result = airportService.getAllAirports();
 
         // Assert
-        assertEquals(2, result.size());
+        assertEquals(2L, result.size());
 
         verify(airportRepository, times(1)).findAll();
     }
