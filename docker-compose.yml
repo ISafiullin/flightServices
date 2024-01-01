@@ -46,6 +46,7 @@ services:
       MYSQL_DB_PASSWORD: abc123
       MYSQL_DB_HOST: mysql-airline
       MYSQL_DB_PORT: 3307
+      MYSQL_DB_TIMEOUT: 300
 
   airport-service:
     depends_on:
@@ -61,6 +62,7 @@ services:
       MYSQL_DB_PASSWORD: abc123
       MYSQL_DB_HOST: mysql-airport
       MYSQL_DB_PORT: 3306
+      MYSQL_DB_TIMEOUT: 300
 
   api-gateway:
     depends_on:

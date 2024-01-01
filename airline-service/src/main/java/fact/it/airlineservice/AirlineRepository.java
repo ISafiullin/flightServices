@@ -10,6 +10,6 @@ import java.util.List;
 
 @Repository
 @Transactional
-public interface AirlineRepository extends  JpaRepository<AirlineFlight, Integer> {
+public interface AirlineRepository extends  JpaRepository<AirlineFlight, Long> {
     List<AirlineFlight> findByFlightNumberIn(List<String>flightNumber);
 }
