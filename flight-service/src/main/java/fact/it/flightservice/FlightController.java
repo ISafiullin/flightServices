@@ -26,12 +26,12 @@ public class FlightController {
         return ResponseEntity.ok("Flight deleted successfully");
     }
 
-    @GetMapping
+    @GetMapping("/byFlightNumber")
     @ResponseStatus(HttpStatus.OK)
-    public List<FlightResponse> getAllFlightsByFlightNumber
-            (@RequestParam List<String> flightNumber) {
+    public List<FlightResponse> getAllFlightsByFlightNumber(@RequestParam List<String> flightNumber) {
         return flightService.getAllFlightsByFlightNumber(flightNumber);
     }
+
 
     @GetMapping("/all")
     @ResponseStatus(HttpStatus.OK)
