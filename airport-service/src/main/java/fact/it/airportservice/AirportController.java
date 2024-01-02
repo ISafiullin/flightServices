@@ -16,14 +16,14 @@ import java.util.List;
 public class AirportController {
     private final AirportService airportService;
 
-    @PostMapping("/request-flight")
+    @PostMapping
     @ResponseStatus(HttpStatus.OK)
     public String requestFlights(@RequestBody AirportRequest airportRequest) {
         boolean result = airportService.requestFlights(airportRequest);
         return (result ? "Successfully requested a flight" : "Failed to request a flight");
     }
 
-    @GetMapping("/all")
+    @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<AirportResponse> getAllAirports() {
         return airportService.getAllAirports();
