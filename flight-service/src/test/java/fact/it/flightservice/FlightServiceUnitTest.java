@@ -42,7 +42,7 @@ public class FlightServiceUnitTest {
     public void testGetAllFlights() {
         // Arrange
         Flight flight = new Flight();
-        flight.setId(1L);
+        flight.setId("1");
         flight.setFlightNumber("ABC 123");
         flight.setDestination("Brussels");
         flight.setAvailableTickets(430);
@@ -65,7 +65,7 @@ public class FlightServiceUnitTest {
     public void testGetAllFlightsByDestination() {
         // Arrange
         Flight flight = new Flight();
-        flight.setId(1L);
+        flight.setId("1");
         flight.setFlightNumber("ABC 123");
         flight.setDestination("Brussels");
         flight.setAvailableTickets(430);
@@ -77,7 +77,7 @@ public class FlightServiceUnitTest {
 
         // Assert
         assertEquals(1, flights.size());
-        assertEquals(1L, flights.get(0).getId());
+        assertEquals("1", flights.get(0).getId());
         assertEquals("Brussels", flights.get(0).getDestination());
         assertEquals("ABC 123", flights.get(0).getFlightNumber());
         assertEquals(430, flights.get(0).getAvailableTickets());
@@ -88,7 +88,7 @@ public class FlightServiceUnitTest {
     @Test
     public void testDeleteFlight() {
         // Mocking data
-        Long id = 1L;
+        String id = "1";
 
         // Perform the delete operation
         flightService.deleteFlight(id);
@@ -99,7 +99,7 @@ public class FlightServiceUnitTest {
 
     private Flight buildSampleFlight() {
         return Flight.builder()
-                .id(1L)
+                .id("1")
                 .flightNumber("AA123")
                 .destination("New York")
                 .availableTickets(484)

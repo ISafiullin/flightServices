@@ -77,7 +77,7 @@ public class FlightService {
         return flights.stream().map(this::mapToFlightResponse).toList();
     }
 
-    public void deleteFlight(Long id) {
+    public void deleteFlight(String id) {
         flightRepository.deleteById(id);
     }
 
