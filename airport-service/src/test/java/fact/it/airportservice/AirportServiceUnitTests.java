@@ -84,7 +84,7 @@ public class AirportServiceUnitTests {
         airportLineFlight.setFlightNumber(flightNumber);
         airportLineFlight.setDestination(destination);
         airportLineFlight.setAvailableTickets(484);
-        airport.setAirportLineFlightList(Arrays.asList(airportLineFlight));
+        airport.setAirportLineFlightsList(Arrays.asList(airportLineFlight));
 
         when(airportRepository.save(any(Airport.class))).thenReturn(airport);
 
@@ -142,7 +142,7 @@ public class AirportServiceUnitTests {
         airportLineFlight.setFlightNumber(flightNumber);
         airportLineFlight.setDestination(destination);
         airportLineFlight.setAvailableTickets(484);
-        airport.setAirportLineFlightList(Arrays.asList(airportLineFlight));
+        airport.setAirportLineFlightsList(Arrays.asList(airportLineFlight));
 
         when(webClient.get()).thenReturn(requestHeadersUriSpec);
         when(requestHeadersUriSpec.uri(anyString(),  any(Function.class))).thenReturn(requestHeadersSpec);

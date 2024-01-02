@@ -72,9 +72,9 @@ public class FlightService {
     }
 
     public List<FlightResponse> getAllFlights() {
-        List<Flight> products = flightRepository.findAll();
+        List<Flight> flights = flightRepository.findAll();
 
-        return products.stream().map(this::mapToFlightResponse).toList();
+        return flights.stream().map(this::mapToFlightResponse).toList();
     }
 
     public void deleteFlight(Long id) {
