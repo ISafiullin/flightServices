@@ -1,10 +1,8 @@
 package fact.it.flightservice;
 
-import fact.it.flightservice.FlightRequest;
-import fact.it.flightservice.FlightResponse;
-import fact.it.flightservice.FlightService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,9 +15,15 @@ public class FlightController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.OK)
-    public void registerFlight
+    public void createFlight
             (@RequestBody FlightRequest flightRequest) {
         flightService.createFlight(flightRequest);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteFlight(@PathVariable String id) {
+        flightService.deleteFlight(id);
+        return ResponseEntity.ok("Flight deleted successfully");
     }
 
     @GetMapping
