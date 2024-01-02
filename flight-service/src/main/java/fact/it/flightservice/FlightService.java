@@ -62,6 +62,12 @@ public class FlightService {
         return flights.stream().map(this::mapToFlightResponse).toList();
     }
 
+    public List<FlightResponse> getAllFlights() {
+        List<Flight> flights = flightRepository.findAll();
+
+        return flights.stream().map(this::mapToFlightResponse).toList();
+    }
+
     private FlightResponse mapToFlightResponse(Flight flight) {
         return FlightResponse.builder()
                 .id(flight.getId())
@@ -69,12 +75,6 @@ public class FlightService {
                 .destination(flight.getDestination())
                 .availableTickets(flight.getAvailableTickets())
                 .build();
-    }
-
-    public List<FlightResponse> getAllFlights() {
-        List<Flight> flights = flightRepository.findAll();
-
-        return flights.stream().map(this::mapToFlightResponse).toList();
     }
 
     public void deleteFlight(String id) {
