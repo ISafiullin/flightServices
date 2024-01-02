@@ -4,10 +4,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
@@ -22,7 +24,7 @@ public class FlightServiceUnitTest {
     private FlightRepository flightRepository;
 
     @Test
-    public void testCreateProduct() {
+    public void testCreateFlight() {
         // Arrange
         FlightRequest flightRequest = new FlightRequest();
         flightRequest.setFlightNumber("ABC 123");
@@ -68,10 +70,10 @@ public class FlightServiceUnitTest {
         flight.setDestination("Brussels");
         flight.setAvailableTickets(430);
 
-        when(flightRepository.findByDestinationIn(Arrays.asList("Brussels"))).thenReturn(Arrays.asList(flight));
+        when(flightRepository.findByFlightNumberIn(Arrays.asList("ABC 123"))).thenReturn(Arrays.asList(flight));
 
         // Act
-        List<FlightResponse> flights = flightService.getAllFlightsByDestination(Arrays.asList("Brussels"));
+        List<FlightResponse> flights = flightService.getAllFlightsByFlightNumber(Arrays.asList("ABC 123"));
 
         // Assert
         assertEquals(1, flights.size());
@@ -80,6 +82,27 @@ public class FlightServiceUnitTest {
         assertEquals("ABC 123", flights.get(0).getFlightNumber());
         assertEquals(430, flights.get(0).getAvailableTickets());
 
-        verify(flightRepository, times(1)).findByDestinationIn(Arrays.asList(flight.getDestination()));
+        verify(flightRepository, times(1)).findByFlightNumberIn(Arrays.asList(flight.getFlightNumber()));
+    }
+
+    @Test
+    public void testDeleteFlight() {
+        // Mocking data
+        Long id = 1L;
+
+        // Perform the delete operation
+        flightService.deleteFlight(id);
+
+        Mockito.lenient().when(flightRepository.findById(Mockito.eq(id))).thenReturn(Optional.of(buildSampleFlight()));
+
+    }
+
+    private Flight buildSampleFlight() {
+        return Flight.builder()
+                .id(1L)
+                .flightNumber("AA123")
+                .destination("New York")
+                .availableTickets(484)
+                .build();
     }
 }

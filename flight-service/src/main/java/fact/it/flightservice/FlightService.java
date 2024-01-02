@@ -2,7 +2,13 @@ package fact.it.flightservice;
 
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import lombok.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.List;
 
@@ -50,8 +56,8 @@ public class FlightService {
         flightRepository.save(flight);
     }
 
-    public List<FlightResponse> getAllFlightsByDestination(List<String> destination) {
-        List<Flight> flights = flightRepository.findByDestinationIn(destination);
+    public List<FlightResponse> getAllFlightsByFlightNumber(List<String> flightNumber) {
+        List<Flight> flights = flightRepository.findByFlightNumberIn(flightNumber);
 
         return flights.stream().map(this::mapToFlightResponse).toList();
     }
@@ -70,4 +76,9 @@ public class FlightService {
 
         return products.stream().map(this::mapToFlightResponse).toList();
     }
+
+    public void deleteFlight(Long id) {
+        flightRepository.deleteById(id);
+    }
+
 }

@@ -2,6 +2,7 @@ package fact.it.flightservice;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -22,15 +23,21 @@ public class FlightServiceController{
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<FlightResponse> getAllFlightsByDestination
-            (@RequestParam List<String> destination) {
-        return flightService.getAllFlightsByDestination(destination);
+    public List<FlightResponse> getAllFlightsByFlightNumber
+            (@RequestParam List<String> flightNumber) {
+        return flightService.getAllFlightsByFlightNumber(flightNumber);
     }
 
     @GetMapping("/all")
     @ResponseStatus(HttpStatus.OK)
     public List<FlightResponse> getAllFlights() {
         return flightService.getAllFlights();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteFlight(@PathVariable Long id) {
+        flightService.deleteFlight(id);
+        return ResponseEntity.ok("Flight deleted successfully");
     }
 
 }

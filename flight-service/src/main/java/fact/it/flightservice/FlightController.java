@@ -24,9 +24,9 @@ public class FlightController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<FlightResponse> getAllFlightsByDestination
-            (@RequestParam List<String> destination) {
-        return flightService.getAllFlightsByDestination(destination);
+    public List<FlightResponse> getAllFlightsByFlightNumber
+            (@RequestParam List<String> flightNumber) {
+        return flightService.getAllFlightsByFlightNumber(flightNumber);
     }
 
     @GetMapping("/all")

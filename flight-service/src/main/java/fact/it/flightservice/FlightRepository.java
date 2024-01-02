@@ -4,6 +4,8 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;
 
-public interface FlightRepository extends MongoRepository<Flight, String> {
-    List<Flight> findByDestinationIn(List<String> destination);
+public interface FlightRepository extends MongoRepository<Flight, Long> {
+
+    List<Flight> findByFlightNumberIn(List<String> flightNumber);
+
 }
