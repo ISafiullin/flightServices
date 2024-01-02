@@ -7,23 +7,21 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/airport")
+@RequestMapping("/api/airport-service")
 @RequiredArgsConstructor
 public class AirportServiceController {
-
     private final AirportService airportService;
 
-    @PostMapping
+    @PostMapping("/request-flight")
     @ResponseStatus(HttpStatus.OK)
     public String requestFlights(@RequestBody AirportRequest airportRequest) {
         boolean result = airportService.requestFlights(airportRequest);
-        return (result ? "A flight has been requested" : "Thr flight couldn't be requested");
+        return (result ? "A flight has been requested" : "The flight couldn't be requested");
     }
 
-    @GetMapping
+    @GetMapping("/all-flights")
     @ResponseStatus(HttpStatus.OK)
-    public List<AirportResponse> getAllFlights(){
+    public List<AirportResponse> getAllFlights() {
         return airportService.getAllAirports();
     }
-
 }
