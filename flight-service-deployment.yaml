@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flight-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: flight-service
+  template:
+    metadata:
+      labels:
+        app: flight-service
+    spec:
+      containers:
+        - name: flight-service
+          image: iliassafiullin/flight-service-image:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: MONGODB_PORT
+              value: "27017"
+            - name: MONGODB_HOST
+              value: mongo-flights
