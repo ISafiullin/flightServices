@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: mongodb-flight-pvc
+  name: mysql-airport-pvc
 spec:
   accessModes:
     - ReadWriteOnce

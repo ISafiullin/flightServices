@@ -13,18 +13,10 @@ spec:
         app: mongo-flights
     spec:
       containers:
-        - name: mongo
+        - name: mongo-flights
           image: mongo:latest
           ports:
             - containerPort: 27017
-          volumeMounts:
-            - name: mongo-flights-storage
-              mountPath: /data/db
-      volumes:
-        - name: mongo-flights-storage
-          persistentVolumeClaim:
-            claimName: mongo-flights-pvc
-
 ---
 apiVersion: v1
 kind: Service
@@ -37,4 +29,3 @@ spec:
     - protocol: TCP
       port: 27017
       targetPort: 27017
-  type: NodePort

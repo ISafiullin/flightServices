@@ -21,4 +21,16 @@ spec:
             - name: MONGODB_PORT
               value: "27017"
             - name: MONGODB_HOST
-              value: mongo-flights
+              value: "mongo-flights"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: flight-service
+spec:
+  selector:
+    app: flight-service
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
