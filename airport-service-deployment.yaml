@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: airport-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: airport-service
+  template:
+    metadata:
+      labels:
+        app: airport-service
+    spec:
+      containers:
+        - name: airport-service
+          image: iliassafiullin/airport-service-image:latest
+          ports:
+            - containerPort: 8081
+          env:
+            - name: FLIGHT_SERVICE_BASEURL
+              value: "http://flight-service:8080"
+            - name: AIRLINE_SERVICE_BASEURL
+              value: "http://airline-service:8082"
+            - name: MYSQL_DB_USERNAME
+              value: "root"
+            - name: MYSQL_DB_PASSWORD
+              value: "abc123"
+            - name: MYSQL_DB_HOST
+              value: "mysql-airport"
+            - name: MYSQL_DB_PORT
+              value: "3306"
