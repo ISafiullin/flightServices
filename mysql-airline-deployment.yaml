@@ -21,12 +21,12 @@ spec:
           ports:
             - containerPort: 3307
           volumeMounts:
-            - name: mysql-airline-storage
+            - name: mysql-airline-storage  # Corrected volume name
               mountPath: /var/lib/mysql
       volumes:
-        - name: mysql-airline-storage
+        - name: mysql-airline-storage  # Corrected volume name
           persistentVolumeClaim:
-            claimName: mysql-airline-pvc
+            claimName: mysql-airline-pvc  # Corrected PVC name
 ---
 apiVersion: v1
 kind: Service
@@ -38,5 +38,5 @@ spec:
   ports:
     - protocol: TCP
       port: 3307
-      targetPort: 3307
+      targetPort: 3307  # Corrected targetPort to match the containerPort in the deployment
   type: NodePort
