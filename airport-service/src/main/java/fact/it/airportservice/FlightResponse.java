@@ -14,4 +14,6 @@ public class FlightResponse {
     private String flightNumber;
     private String destination;
     private Integer availableTickets;
+    private String gateNumber;
+    private boolean assignedGate;
 }

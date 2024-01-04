@@ -28,4 +28,11 @@ public class AirportController {
     public List<AirportResponse> getAllAirports() {
         return airportService.getAllAirports();
     }
+
+    @PutMapping("/assignGate")
+    @ResponseStatus(HttpStatus.OK)
+    public String assignGateToFlight(@RequestBody AirportLineFlightDto flightDto) {
+        boolean result = airportService.assignGateToFlight(flightDto);
+        return (result ? "Gate assigned successfully" : "Failed to assign gate");
+    }
 }

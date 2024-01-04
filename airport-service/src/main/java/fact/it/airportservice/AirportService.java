@@ -17,6 +17,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -116,8 +117,30 @@ public class AirportService {
                         airportLineFlight.getId(),
                         airportLineFlight.getFlightNumber(),
                         airportLineFlight.getDestination(),
-                        airportLineFlight.getAvailableTickets()
+                        airportLineFlight.getAvailableTickets(),
+                        airportLineFlight.getGateNumber()
                 ))
                 .collect(Collectors.toList());
     }
+
+    public boolean assignGateToFlight(AirportLineFlightDto flightDto) {
+        Optional<Airport> airportOptional = airportRepository.findById(flightDto.getId());
+
+        if (airportOptional.isPresent()) {
+            Airport airport = airportOptional.get();
+            List<AirportLineFlight> airportLineFlights = airport.getAirportLineFlightsList();
+
+            for (AirportLineFlight flight : airportLineFlights) {
+                if (flight.getFlightNumber().equals(flightDto.getFlightNumber()) && !flight.isAssignedGate()) {
+                    flight.setGateNumber(flightDto.getGateNumber());
+                    flight.setAssignedGate(true);
+                    airportRepository.save(airport);
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
 }

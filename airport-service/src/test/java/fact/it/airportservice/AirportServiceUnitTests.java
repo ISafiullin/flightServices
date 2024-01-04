@@ -6,12 +6,14 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
 
@@ -161,13 +163,13 @@ public class AirportServiceUnitTests {
     @Test
     public void testGetAllAirports() {
         // Arrange
-        AirportLineFlight airportLineFlight = new AirportLineFlight(1L, "ABC 123", "Brussels", 484);
-        AirportLineFlight airportLineFlight1 = new AirportLineFlight(2L, "DEF 456", "Amsterdam", 484);
+        AirportLineFlight airportLineFlight = new AirportLineFlight(1L, "ABC 123", "Brussels",484,null,false);
+        AirportLineFlight airportLineFlight1 = new AirportLineFlight(2L, "DEF 456", "Amsterdam",484, null, false);
 
         Airport airport1 = new Airport(1L, "JFK Airport", "1",2,Arrays.asList(airportLineFlight1, airportLineFlight));
 
-        AirportLineFlight airportLineFlight2 = new AirportLineFlight(3L, "XYZ 999", "Milan", 484);
-        AirportLineFlight airportLineFlight3 = new AirportLineFlight(4L, "UFC 229", "Hamburg", 484);
+        AirportLineFlight airportLineFlight2 = new AirportLineFlight(3L, "XYZ 999", "Milan", 484,"5B",true);
+        AirportLineFlight airportLineFlight3 = new AirportLineFlight(4L, "UFC 229", "Hamburg", 484,"1A",true);
 
         Airport airport2 = new Airport(2L, "Schiphol", "1",2,Arrays.asList(airportLineFlight3, airportLineFlight2));
 
@@ -180,5 +182,30 @@ public class AirportServiceUnitTests {
         assertEquals(2L, result.size());
 
         verify(airportRepository, times(1)).findAll();
+    }
+
+    @Test
+    public void assignGateToFlight_Success() {
+        Airport airport = new Airport(1L, "Airport1", "REQ123", 10, Collections.singletonList(
+                new AirportLineFlight(1L, "FL123", "Brussels", 5, null, false)
+        ));
+
+        Mockito.when(airportRepository.findById(1L)).thenReturn(java.util.Optional.of(airport));
+        Mockito.when(airportRepository.save(Mockito.any())).thenReturn(airport);
+
+        AirportLineFlightDto flightDto = new AirportLineFlightDto(1L, "FL123", "Destination1", 5, "Gate1");
+        assertTrue(airportService.assignGateToFlight(flightDto));
+    }
+
+    @Test
+    public void assignGateToFlight_Failure() {
+        Airport airport = new Airport(1L, "Airport1", "REQ123", 10, Collections.singletonList(
+                new AirportLineFlight(1L, "FL123", "Destination1", 5, "Gate1", true)
+        ));
+
+        Mockito.when(airportRepository.findById(1L)).thenReturn(java.util.Optional.of(airport));
+
+        AirportLineFlightDto flightDto = new AirportLineFlightDto(1L, "FL123", "Destination1", 5, "Gate2");
+        assertFalse(airportService.assignGateToFlight(flightDto));
     }
 }

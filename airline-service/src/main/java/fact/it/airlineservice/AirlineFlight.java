@@ -19,5 +19,6 @@ public class AirlineFlight {
     private Long id;
     private String name;
     private String flightNumber;
+    private String status;
     private boolean available;
 }
