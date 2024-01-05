@@ -33,4 +33,11 @@ public class AirlineServiceController {
         }
     }
 
+
+    @GetMapping("/all")
+    @ResponseStatus(HttpStatus.OK)
+    public List<AirlineResponse> getAllAirlines() {
+        return airlineService.getAllAirlines();
+    }
+
 }

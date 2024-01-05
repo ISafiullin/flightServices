@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -73,5 +74,20 @@ public class AirlineService {
         } else {
             return false; // Flight not found
         }
+    }
+
+    public List<AirlineResponse> getAllAirlines() {
+        List<AirlineFlight> airlineFlights = airlineRepository.findAll();
+
+        return airlineFlights.stream().map(this::mapToAirlineResponse).toList();
+    }
+
+    private AirlineResponse mapToAirlineResponse(AirlineFlight airlineFlight) {
+        return AirlineResponse.builder()
+                .id(airlineFlight.getId())
+                .name(airlineFlight.getName())
+                .flightNumber(airlineFlight.getFlightNumber())
+                .status(airlineFlight.getStatus())
+                .build();
     }
 }

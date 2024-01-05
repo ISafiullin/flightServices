@@ -20,13 +20,13 @@ public class FlightController {
         flightService.createFlight(flightRequest);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteFlight(@PathVariable String id) {
         flightService.deleteFlight(id);
         return ResponseEntity.ok("Flight deleted successfully");
     }
 
-    @GetMapping
+    @GetMapping("{flightNumber}")
     @ResponseStatus(HttpStatus.OK)
     public List<FlightResponse> getAllFlightsByFlightNumber
             (@RequestParam List<String> flightNumber) {
