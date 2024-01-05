@@ -61,20 +61,25 @@ public class AirportService {
     }
 
     public boolean requestFlights(AirportRequest airportRequest) {
+        // Create a new Airport object and set a random flight request number
         Airport airport = new Airport();
         airport.setFlightRequestNumber(UUID.randomUUID().toString());
 
+        // Map the AirportLineFlightDtoList from the AirportRequest to AirportLineFlights
         List<AirportLineFlight> airportLineFlights = airportRequest.getAirportLineFlightDtoList()
                 .stream()
                 .map(this::mapToAirportLineFlight)
                 .toList();
 
+        // Set the AirportLineFlightsList for the airport
         airport.setAirportLineFlightsList(airportLineFlights);
 
+        // Extract flight numbers from the AirportLineFlightsList
         List<String> flightNumbers = airport.getAirportLineFlightsList().stream()
                 .map(AirportLineFlight::getFlightNumber)
                 .toList();
 
+        // Fetch availability information from the airline service
         AirlineResponse[] airlineResponseArray = webClient.get()
                 .uri("http://" + airlineServiceBaseUrl + "/api/airline",
                         uriBuilder -> uriBuilder.queryParam("flightnumber", flightNumbers).build())
@@ -82,10 +87,12 @@ public class AirportService {
                 .bodyToMono(AirlineResponse[].class)
                 .block();
 
+        // Check if all flights are available
         boolean allFlightsAvailable = Arrays.stream(airlineResponseArray)
                 .allMatch(AirlineResponse::isAvailable);
 
-        if(allFlightsAvailable){
+        if (allFlightsAvailable) {
+            // Fetch detailed flight information from the flight service
             FlightResponse[] flightResponseArray = webClient.get()
                     .uri("http://" + flightServiceBaseUrl + "/api/flight",
                             uriBuilder -> uriBuilder.queryParam("flightnumber", flightNumbers).build())
@@ -93,13 +100,16 @@ public class AirportService {
                     .bodyToMono(FlightResponse[].class)
                     .block();
 
+            // Update bookedFlights count for each flight
             airport.getAirportLineFlightsList().stream()
                     .map(airportFlight -> {
                         FlightResponse flight = Arrays.stream(flightResponseArray)
                                 .filter(p -> p.getFlightNumber().equals(airportFlight.getFlightNumber()))
                                 .findFirst()
                                 .orElse(null);
+
                         if (flight != null) {
+                            // Increment bookedFlights count for the corresponding airport
                             Integer bookedFlights = airport.getBookedFlights();
                             if (bookedFlights != null) {
                                 airport.setBookedFlights(bookedFlights + 1);
@@ -111,12 +121,14 @@ public class AirportService {
                     })
                     .collect(Collectors.toList());
 
+            // Save the updated airport information
             airportRepository.save(airport);
             return true;
         } else {
             return false;
         }
     }
+
 
     public List<AirportResponse> getAllAirports() {
         List<Airport> airports = airportRepository.findAll();

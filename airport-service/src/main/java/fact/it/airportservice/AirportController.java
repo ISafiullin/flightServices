@@ -20,7 +20,7 @@ public class AirportController {
     @ResponseStatus(HttpStatus.OK)
     public String requestFlights(@RequestBody AirportRequest airportRequest) {
         boolean result = airportService.requestFlights(airportRequest);
-        return (result ? "Successfully requested a flight" : "Failed to request a flight");
+        return (result ? "Flights requested and booked successfully" : "Failed to request or book flights");
     }
 
     @GetMapping("/all")
