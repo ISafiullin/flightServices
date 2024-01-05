@@ -10,6 +10,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AirportResponse {
+    private String name;
     private String flightRequestNumber;
     private List<AirportLineFlightDto> airportLineItemDtoList;
 }

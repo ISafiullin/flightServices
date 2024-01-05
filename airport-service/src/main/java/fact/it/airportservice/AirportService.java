@@ -64,7 +64,7 @@ public class AirportService {
         Airport airport = new Airport();
         airport.setFlightRequestNumber(UUID.randomUUID().toString());
 
-        List<AirportLineFlight> airportLineFlights = airportRequest.getAirportLineItemDtoList()
+        List<AirportLineFlight> airportLineFlights = airportRequest.getAirportLineFlightDtoList()
                 .stream()
                 .map(this::mapToAirportLineFlight)
                 .toList();
@@ -123,6 +123,7 @@ public class AirportService {
 
         return airports.stream()
                 .map(airport -> new AirportResponse(
+                        airport.getName(),
                         airport.getFlightRequestNumber(),
                         mapToAirportLineFlightDto(airport.getAirportLineFlightsList())
                 ))
@@ -149,23 +150,25 @@ public class AirportService {
     }
 
     public boolean assignGateToFlight(AirportLineFlightDto flightDto) {
-        Optional<Airport> airportOptional = airportRepository.findById(flightDto.getId());
+        return airportRepository.findById(flightDto.getId())
+                .map(airport -> {
+                    AirportLineFlight matchingFlight = airport.getAirportLineFlightsList().stream()
+                            .filter(flight -> flight.getFlightNumber().equals(flightDto.getFlightNumber()) && !flight.isAssignedGate())
+                            .findFirst()
+                            .orElse(null);
 
-        if (airportOptional.isPresent()) {
-            Airport airport = airportOptional.get();
-            List<AirportLineFlight> airportLineFlights = airport.getAirportLineFlightsList();
-
-            for (AirportLineFlight flight : airportLineFlights) {
-                if (flight.getFlightNumber().equals(flightDto.getFlightNumber()) && !flight.isAssignedGate()) {
-                    flight.setGateNumber(flightDto.getGateNumber());
-                    flight.setAssignedGate(true);
-                    airportRepository.save(airport);
-                    return true;
-                }
-            }
-        }
-
-        return false;
+                    if (matchingFlight != null) {
+                        matchingFlight.setGateNumber(flightDto.getGateNumber());
+                        matchingFlight.setAssignedGate(true);
+                        airportRepository.save(airport);
+                        return true;
+                    } else {
+                        return false; // Flight is already assigned a gate
+                    }
+                })
+                .orElse(false); // Airport not found
     }
+
+
 
 }

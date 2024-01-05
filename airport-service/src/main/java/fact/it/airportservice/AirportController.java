@@ -29,7 +29,7 @@ public class AirportController {
         return airportService.getAllAirports();
     }
 
-    @PutMapping("/assignGate")
+    @PostMapping("/assignGate")
     @ResponseStatus(HttpStatus.OK)
     public String assignGateToFlight(@RequestBody AirportLineFlightDto flightDto) {
         boolean result = airportService.assignGateToFlight(flightDto);

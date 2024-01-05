@@ -10,5 +10,5 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AirportRequest {
-    private List<AirportLineFlightDto> airportLineItemDtoList;
+    private List<AirportLineFlightDto> airportLineFlightDtoList;
 }

@@ -15,6 +15,7 @@ import reactor.core.publisher.Mono;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -63,7 +64,7 @@ public class AirportServiceUnitTests {
         airportLineFlightDto.setFlightNumber(flightNumber);
         airportLineFlightDto.setDestination(destination);
         airportLineFlightDto.setAvailableTickets(484);
-        airportRequest.setAirportLineItemDtoList(Arrays.asList(airportLineFlightDto));
+        airportRequest.setAirportLineFlightDtoList(Arrays.asList(airportLineFlightDto));
 
         AirlineResponse airlineResponse = new AirlineResponse();
         // populate inventoryResponse with test data
@@ -120,7 +121,7 @@ public class AirportServiceUnitTests {
         airportLineFlightDto.setFlightNumber(flightNumber);
         airportLineFlightDto.setDestination(destination);
         airportLineFlightDto.setAvailableTickets(484);
-        airportRequest.setAirportLineItemDtoList(Arrays.asList(airportLineFlightDto));
+        airportRequest.setAirportLineFlightDtoList(Arrays.asList(airportLineFlightDto));
 
         AirlineResponse airlineResponse = new AirlineResponse();
         // populate inventoryResponse with test data
@@ -198,14 +199,22 @@ public class AirportServiceUnitTests {
     }
 
     @Test
-    public void assignGateToFlight_Failure() {
-        Airport airport = new Airport(1L, "Airport1", "REQ123", 10, Collections.singletonList(
-                new AirportLineFlight(1L, "FL123", "Destination1", 5, "Gate1", true)
-        ));
-
-        Mockito.when(airportRepository.findById(1L)).thenReturn(java.util.Optional.of(airport));
-
+    public void assignGateToFlight_Failure_AlreadyAssigned() {
+        // Mock data
         AirportLineFlightDto flightDto = new AirportLineFlightDto(1L, "FL123", "Destination1", 5, "Gate2");
-        assertFalse(airportService.assignGateToFlight(flightDto));
+        AirportLineFlight existingFlight = new AirportLineFlight(1L, "FL123", "Destination1", 5, "Gate1", true);
+        Airport airport = new Airport(1L, "Airport1", "REQ123", 10, Collections.singletonList(existingFlight));
+
+        // Mock repository behavior
+        Mockito.when(airportRepository.findById(1L)).thenReturn(Optional.of(airport));
+
+        // Execute the method
+        boolean result = airportService.assignGateToFlight(flightDto);
+
+        // Verify interactions and assertions
+        Mockito.verify(airportRepository, Mockito.times(1)).findById(1L);
+        Mockito.verifyNoMoreInteractions(airportRepository);
+
+        assertFalse(result, "The gate assignment should fail.");
     }
 }
