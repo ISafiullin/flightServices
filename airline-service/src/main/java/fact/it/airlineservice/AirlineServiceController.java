@@ -22,7 +22,7 @@ public class AirlineServiceController {
         return airlineService.available(flightNumber);
     }
 
-    @PutMapping("/cancelFlight/{id}")
+    @PostMapping("/cancelFlight/{id}")
     public ResponseEntity<String> cancelFlight(@PathVariable Long id) {
         boolean result = airlineService.cancelFlight(id);
 
@@ -30,6 +30,17 @@ public class AirlineServiceController {
             return ResponseEntity.ok("Flight canceled successfully");
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Flight not found or already canceled");
+        }
+    }
+
+    @PostMapping("/scheduleFlight/{id}")
+    public ResponseEntity<String> scheduleFlight(@PathVariable Long id) {
+        boolean result = airlineService.scheduleFlight(id);
+
+        if (result) {
+            return ResponseEntity.ok("Flight scheduled successfully");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Flight not successfully scheduled");
         }
     }
 

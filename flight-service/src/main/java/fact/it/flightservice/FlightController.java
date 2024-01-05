@@ -13,11 +13,13 @@ import java.util.List;
 public class FlightController {
     private final FlightService flightService;
 
-    @PostMapping
-    @ResponseStatus(HttpStatus.OK)
-    public void createFlight
-            (@RequestBody FlightRequest flightRequest) {
+    @PostMapping("/create")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<String> createFlight(@RequestBody FlightRequest flightRequest) {
         flightService.createFlight(flightRequest);
+
+        // Respond with a success message
+        return ResponseEntity.status(HttpStatus.CREATED).body("Flight created successfully");
     }
 
     @DeleteMapping("/delete/{id}")

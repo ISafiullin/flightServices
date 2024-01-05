@@ -77,6 +77,29 @@ public class AirlineService {
         }
     }
 
+    public boolean scheduleFlight(Long id) {
+        Optional<AirlineFlight> optionalFlight = airlineRepository.findById(id);
+
+        if (optionalFlight.isPresent()) {
+            AirlineFlight flight = optionalFlight.get();
+
+            // Check if the flight is not already canceled
+            if (!"SCHEDULED".equals(flight.getStatus())) {
+                // Update the flight status to canceled
+                flight.setStatus("SCHEDULED");
+                // Set available to false
+                flight.setAvailable(true);
+
+                airlineRepository.save(flight);
+                return true; // Flight scheduled successfully
+            } else {
+                return false; // Flight is already scheduled
+            }
+        } else {
+            return false; // Flight not found
+        }
+    }
+
     public List<AirlineResponse> getAllAirlines() {
         List<AirlineFlight> airlineFlights = airlineRepository.findAll();
 
