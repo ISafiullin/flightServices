@@ -9,6 +9,7 @@ import fact.it.airportservice.Airport;
 import fact.it.airportservice.AirportLineFlight;
 import fact.it.airportservice.AirportRepository;
 
+import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -34,6 +35,30 @@ public class AirportService {
 
     @Value("${airlineservice.baseurl}")
     private String airlineServiceBaseUrl;
+
+    @PostConstruct
+    public void loadData() {
+        if (airportRepository.count() <= 0) {
+            Airport airport = new Airport();
+            airport.setName("JFK Airport");
+            airport.setFlightRequestNumber("JFK 111");  // Set the status here
+            airport.setBookedFlights(55);
+
+            Airport airport1 = new Airport();
+            airport1.setName("Brussels Airport");
+            airport1.setFlightRequestNumber("BRU 000");  // Set the status here
+            airport1.setBookedFlights(30);
+
+            Airport airport2 = new Airport();
+            airport2.setName("Schiphol");
+            airport2.setFlightRequestNumber("SCH 234");  // Set the status here
+            airport2.setBookedFlights(48);
+
+            airportRepository.save(airport);
+            airportRepository.save(airport1);
+            airportRepository.save(airport2);
+        }
+    }
 
     public boolean requestFlights(AirportRequest airportRequest) {
         Airport airport = new Airport();

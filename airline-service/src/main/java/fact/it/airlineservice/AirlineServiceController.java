@@ -15,7 +15,7 @@ import java.util.List;
 public class AirlineServiceController {
     private final AirlineService airlineService;
 
-    @GetMapping
+    @GetMapping("/availabel")
     @ResponseStatus
     public List<AirlineResponse> available
             (@RequestParam List<String> flightNumber){
