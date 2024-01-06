@@ -22,7 +22,7 @@ public class AirlineServiceController {
         return airlineService.available(flightNumber);
     }
 
-    @PostMapping("/cancelFlight/{id}")
+    @PutMapping("/cancelFlight/{id}")
     public ResponseEntity<String> cancelFlight(@PathVariable Long id) {
         boolean result = airlineService.cancelFlight(id);
 

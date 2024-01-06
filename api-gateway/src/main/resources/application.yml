@@ -28,10 +28,11 @@ spring:
         - id: flight-service
           uri: http://${FLIGHT_SERVICE_BASEURL:localhost:8080}
           predicates:
-            - Path=/flights
+            - Path=/flights/create
             - Method=POST
           filters:
-            - SetPath=/api/flight
+            - SetPath=/api/flight/create
+
         - id: flight-service-all
           uri: http://${FLIGHT_SERVICE_BASEURL:localhost:8080}
           predicates:
@@ -39,23 +40,42 @@ spring:
             - Method=GET
           filters:
             - SetPath=/api/flight/all
-        - id: airline-service
-          uri: http://${AIRLINE_SERVICE_BASEURL:localhost:8082}
+
+        - id: flight-service-delete
+          uri: http://${FLIGHT_SERVICE_BASEURL:localhost:8080}
           predicates:
-            - Path=/airlines
-            - Method=POST
+            - Path=/flights/${id}
+            - Method=DELETE
           filters:
-            - SetPath=/api/airlines
-        - id: flight-service-all
+            - SetPath=/api/flight/delete/${id}
+
+        - id: airline-service-all
           uri: http://${AIRLINE_SERVICE_BASEURL:localhost:8082}
           predicates:
             - Path=/airlines
             - Method=GET
           filters:
             - SetPath=/api/airlines/all
+
+        - id: airline-service-cancel
+          uri: http://${AIRLINE_SERVICE_BASEURL:localhost:8082}
+          predicates:
+            - Path=/airlines/cancel/${id}
+            - Method=PUT
+          filters:
+            - SetPath=/api/airlines/cancelFlight/${id}
+
         - id: airport-service
           uri: http://${AIRPORT_SERVICE_BASEURL:localhost:8081}
           predicates:
             - Path=/airports
           filters:
             - SetPath=/api/airport
+
+        - id: airport-service-schedule-flight
+          uri: http://${AIRPORT_SERVICE_BASEURL:localhost:8081}
+          predicates:
+            - Path=/airports/schedule/${id}
+            - Method=POST
+          filters:
+            - SetPath=/api/airport/scheduleFlight/${id}
