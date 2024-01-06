@@ -70,7 +70,7 @@ spring:
           predicates:
             - Path=/airports
           filters:
-            - SetPath=/api/airport
+            - SetPath=/api/airport/all
 
         - id: airport-service-schedule-flight
           uri: http://${AIRPORT_SERVICE_BASEURL:localhost:8081}

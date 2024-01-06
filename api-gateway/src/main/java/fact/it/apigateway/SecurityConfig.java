@@ -18,7 +18,7 @@ public class SecurityConfig {
         serverHttpSecurity
                 .authorizeExchange(exchange ->
                         exchange.pathMatchers(HttpMethod.GET, "/flights").permitAll()
-                                .pathMatchers(HttpMethod.POST, "/flights/create/**").permitAll()
+                                .pathMatchers(HttpMethod.POST, "/flights/create").permitAll()
                                 .pathMatchers(HttpMethod.DELETE, "/flights/delete/**").permitAll()
                                 .pathMatchers(HttpMethod.GET, "/airlines").permitAll()
                                 .pathMatchers(HttpMethod.PUT, "/airlines/cancel/**").permitAll()
@@ -26,6 +26,7 @@ public class SecurityConfig {
                                 .pathMatchers(HttpMethod.POST, "/airports/schedule/**").permitAll()
                                 .anyExchange().authenticated()
                 )
+                .csrf(withDefaults())
                 .oauth2ResourceServer(oauth2 -> oauth2
                         .jwt(withDefaults())
                 );
