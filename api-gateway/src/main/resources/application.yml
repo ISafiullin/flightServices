@@ -44,7 +44,7 @@ spring:
         - id: flight-service-delete
           uri: http://${FLIGHT_SERVICE_BASEURL:localhost:8080}
           predicates:
-            - Path=/flights/delete/**
+            - Path=/flights/delete/${id}
             - Method=DELETE
           filters:
             - SetPath=/api/flight/delete/${id}
@@ -55,15 +55,15 @@ spring:
             - Path=/airlines
             - Method=GET
           filters:
-            - SetPath=/api/airlines/all
+            - SetPath=/api/airline/all
 
         - id: airline-service-cancel
           uri: http://${AIRLINE_SERVICE_BASEURL:localhost:8082}
           predicates:
-            - Path=/airlines/cancel/**
+            - Path=/airlines/cancel/${id}
             - Method=PUT
           filters:
-            - SetPath=/api/airlines/cancelFlight/${id}
+            - SetPath=/api/airline/cancelFlight/${id}
 
         - id: airport-service
           uri: http://${AIRPORT_SERVICE_BASEURL:localhost:8081}
@@ -76,7 +76,7 @@ spring:
         - id: airport-service-schedule-flight
           uri: http://${AIRPORT_SERVICE_BASEURL:localhost:8081}
           predicates:
-            - Path=/airports/schedule/**
+            - Path=/airports/schedule/${id}
             - Method=POST
           filters:
             - SetPath=/api/airport/scheduleFlight/${id}
