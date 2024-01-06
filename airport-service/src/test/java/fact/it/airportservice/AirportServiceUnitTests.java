@@ -68,7 +68,7 @@ public class AirportServiceUnitTests {
 
         AirlineResponse airlineResponse = new AirlineResponse();
         // populate inventoryResponse with test data
-        airlineResponse.setFligtNumber(flightNumber);
+        airlineResponse.setFlightNumber(flightNumber);
         airlineResponse.setAvailable(true);
 
         FlightResponse flightResponse = new FlightResponse();
@@ -125,7 +125,7 @@ public class AirportServiceUnitTests {
 
         AirlineResponse airlineResponse = new AirlineResponse();
         // populate inventoryResponse with test data
-        airlineResponse.setFligtNumber(flightNumber);
+        airlineResponse.setFlightNumber(flightNumber);
         airlineResponse.setAvailable(false);
 
         FlightResponse flightResponse = new FlightResponse();

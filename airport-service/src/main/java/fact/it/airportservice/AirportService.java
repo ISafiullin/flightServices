@@ -133,13 +133,15 @@ public class AirportService {
     public List<AirportResponse> getAllAirports() {
         List<Airport> airports = airportRepository.findAll();
 
-        return airports.stream()
-                .map(airport -> new AirportResponse(
-                        airport.getName(),
-                        airport.getFlightRequestNumber(),
-                        mapToAirportLineFlightDto(airport.getAirportLineFlightsList())
-                ))
-                .collect(Collectors.toList());
+        return airports.stream().map(this::mapToAirportResponse).toList();
+    }
+
+    private AirportResponse mapToAirportResponse(Airport airport) {
+        return AirportResponse.builder()
+                .name(airport.getName())
+                .flightRequestNumber(airport.getFlightRequestNumber())
+                .bookedFlights(airport.getBookedFlights())
+                .build();
     }
 
     private AirportLineFlight mapToAirportLineFlight(AirportLineFlightDto airportLineFlightDto) {

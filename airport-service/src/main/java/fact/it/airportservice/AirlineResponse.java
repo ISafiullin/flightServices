@@ -11,6 +11,6 @@ import lombok.NoArgsConstructor;
 @Builder
 public class AirlineResponse {
     private String name;
-    private String fligtNumber;
+    private String flightNumber;
     private boolean available;
 }
