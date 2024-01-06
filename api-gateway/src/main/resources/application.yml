@@ -44,7 +44,7 @@ spring:
         - id: flight-service-delete
           uri: http://${FLIGHT_SERVICE_BASEURL:localhost:8080}
           predicates:
-            - Path=/flights/${id}
+            - Path=/flights/delete/${id}
             - Method=DELETE
           filters:
             - SetPath=/api/flight/delete/${id}
