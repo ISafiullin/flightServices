@@ -60,7 +60,7 @@ spring:
         - id: airline-service-cancel
           uri: http://${AIRLINE_SERVICE_BASEURL:localhost:8082}
           predicates:
-            - Path=/airlines/cancel/${id}
+            - Path=/airlines/cancel/**
             - Method=PUT
           filters:
             - SetPath=/api/airline/cancelFlight/${id}

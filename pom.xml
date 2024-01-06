@@ -10,13 +10,8 @@
     <packaging>pom</packaging>
 
     <name>fightservices</name>
-    <url>http://www.flightservices.com</url>
+    <url></url>
     <modules>
-        <module>flight-service</module>
-        <module>airport-service</module>
-        <module>airline-service</module>
-        <module>api-gateway</module>
-        <module>api-gateway</module>
     </modules>
 
     <properties>
