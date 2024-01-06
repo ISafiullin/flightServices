@@ -74,8 +74,8 @@ services:
       - 8083:8083
     environment:
       FLIGHT_SERVICE_BASEURL: flight-service:8080
-      AIRPORT_SERVICE_BASEURL: airline-service:8082
-      AIRLINE_SERVICE_BASEURL: airport-service:8081
+      AIRPORT_SERVICE_BASEURL: airport-service:8081
+      AIRLINE_SERVICE_BASEURL: airline-service:8082
 
 volumes:
   mongodb_flight_data:
