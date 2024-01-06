@@ -74,9 +74,9 @@ spring:
             - SetPath=/api/airport/all
 
         - id: airport-service-schedule-flight
-          uri: http://${AIRPORT_SERVICE_BASEURL:localhost:8081}
+          uri: http://${AIRLINE_SERVICE_BASEURL:localhost:8082}
           predicates:
-            - Path=/airports/schedule/${id}
+            - Path=/airlines/schedule/**
             - Method=POST
           filters:
-            - SetPath=/api/airport/scheduleFlight/${id}
+            - SetPath=/api/airline/scheduleFlight/${id}
