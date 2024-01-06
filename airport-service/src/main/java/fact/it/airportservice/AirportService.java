@@ -141,7 +141,7 @@ public class AirportService {
                 .name(airport.getName())
                 .flightRequestNumber(airport.getFlightRequestNumber())
                 .bookedFlights(airport.getBookedFlights())
-                .build();
+        .build();
     }
 
     private AirportLineFlight mapToAirportLineFlight(AirportLineFlightDto airportLineFlightDto) {

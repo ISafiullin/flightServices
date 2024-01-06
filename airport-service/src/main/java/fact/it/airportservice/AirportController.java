@@ -16,7 +16,7 @@ import java.util.List;
 public class AirportController {
     private final AirportService airportService;
 
-    @PostMapping("/request")
+    @PutMapping("/request")
     @ResponseStatus(HttpStatus.OK)
     public String requestFlights(@RequestBody AirportRequest airportRequest) {
         boolean result = airportService.requestFlights(airportRequest);
