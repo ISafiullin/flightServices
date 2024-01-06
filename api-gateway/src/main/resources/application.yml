@@ -69,6 +69,7 @@ spring:
           uri: http://${AIRPORT_SERVICE_BASEURL:localhost:8081}
           predicates:
             - Path=/airports
+            - Method=GET
           filters:
             - SetPath=/api/airport/all
 

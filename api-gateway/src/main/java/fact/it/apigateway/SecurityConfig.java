@@ -17,11 +17,12 @@ public class SecurityConfig {
     public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity serverHttpSecurity) {
         serverHttpSecurity
                 .authorizeExchange(exchange ->
-                        exchange.pathMatchers(HttpMethod.GET, "/api/**").permitAll() // Allow GET requests to /api/**
-                        .pathMatchers(HttpMethod.POST, "/api/**").permitAll() // Allow POST requests to /api/**
-                        .pathMatchers(HttpMethod.PUT, "/api/**").permitAll() // Allow PUT requests to /api/**
-                        .pathMatchers(HttpMethod.DELETE, "/api/**").permitAll() // Allow DELETE requests to /api/**
-                        .anyExchange().authenticated()
+                        exchange.pathMatchers(HttpMethod.GET,"/flights", "/airports", "airlines").permitAll()
+                                .pathMatchers(HttpMethod.POST, "/airports/schedule/**","/flights/create").permitAll()
+                                .pathMatchers(HttpMethod.DELETE,"/flights/delete/**").permitAll()
+                                .pathMatchers(HttpMethod.PUT,"/airlines/cancel/**").permitAll()
+                                .anyExchange()
+                                .authenticated()
                 )
                 .oauth2ResourceServer(oauth2 -> oauth2
                         .jwt(withDefaults())
