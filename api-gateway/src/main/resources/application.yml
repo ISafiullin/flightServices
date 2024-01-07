@@ -73,6 +73,14 @@ spring:
           filters:
             - SetPath=/api/airport/all
 
+        - id: airport-service-assigngate
+          uri: http://${AIRPORT_SERVICE_BASEURL:localhost:8081}
+          predicates:
+            - Path=/airports/{id}/assigngate
+            - Method=POST
+          filters:
+            - SetPath=/api/airport/assignGate/{id}
+
         - id: airport-service-schedule-flight
           uri: http://${AIRLINE_SERVICE_BASEURL:localhost:8082}
           predicates:
