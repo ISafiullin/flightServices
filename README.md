@@ -15,7 +15,7 @@ screenshots:
 <img src="images/Schermafbeelding%202024-01-06%20193441.png" width="500"/>
 <img src="images/Schermafbeelding%202024-01-06%20172648.png" width="500"/>
 <img src="images/Schermafbeelding%202024-01-06%20173000.png" width="500"/>
-<img src="images/Schermafbeelding%202024-01-06%20180943.png" width="500"/>
+<img src="images/Schermafbeelding%202024-01-06%20195206.png" width="500"/>
 <img src="images/Schermafbeelding%202024-01-06%20192330.png" width="500"/>
 
 
