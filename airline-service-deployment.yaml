@@ -18,6 +18,8 @@ spec:
           ports:
             - containerPort: 8082
           env:
+            - name: FLIGHT_SERVICE_BASEURL
+              value: "flight-service:8080"
             - name: MYSQL_DB_USERNAME
               value: "root"
             - name: MYSQL_DB_PASSWORD
